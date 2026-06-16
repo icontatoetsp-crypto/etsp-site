@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ETSP | Formação de Jovens Agentes Ambientais</title>
+
+<style>
+:root{
+  --bg:#05070d;
+  --card:#0d1324;
+  --card2:#101a33;
+  --blue:#00b7ff;
+  --cyan:#5ee7ff;
+  --green:#56f39a;
+  --text:#f4f7fb;
+  --muted:#a9b7cc;
+  --border:rgba(255,255,255,.12);
+  --shadow:0 25px 80px rgba(0,0,0,.45);
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Inter,Arial,Helvetica,sans-serif;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  background:
+    radial-gradient(circle at top left,rgba(0,183,255,.18),transparent 35%),
+    radial-gradient(circle at top right,rgba(86,243,154,.12),transparent 30%),
+    var(--bg);
+  color:var(--text);
+  overflow-x:hidden;
+}
+
+a{
+  color:inherit;
+  text-decoration:none;
+}
+
+header{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  z-index:50;
+  background:rgba(5,7,13,.78);
+  backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--border);
+}
+
+.nav{
+  max-width:1200px;
+  margin:auto;
+  padding:16px 24px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.logo{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  font-weight:800;
+  letter-spacing:.5px;
+}
+
+.logo img{
+  width:42px;
+  height:42px;
+  border-radius:12px;
+  object-fit:cover;
+}
+
+.logo span{
+  background:linear-gradient(90deg,var(--blue),var(--green));
+  -webkit-background-clip:text;
+  color:transparent;
+  font-size:1.3rem;
+  font-weight:800;
+}
+
+.menu{
+  display:flex;
+  gap:24px;
+  color:var(--muted);
+  font-size:.95rem;
+}
+
+.menu a:hover{
+  color:var(--cyan);
+}
+
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:13px 22px;
+  border-radius:999px;
+  border:1px solid var(--border);
+  background:linear-gradient(135deg,var(--blue),#246bff);
+  color:white;
+  font-weight:700;
+  box-shadow:0 12px 35px rgba(0,183,255,.25);
+  transition:.25s;
+}
+
+.btn:hover{
+  transform:translateY(-2px);
+  box-shadow:0 20px 45px rgba(0,183,255,.4);
+}
+
+.btn.secondary{
+  background:rgba(255,255,255,.06);
+  box-shadow:none;
+}
+
+section{
+  max-width:1200px;
+  margin:auto;
+  padding:100px 24px;
+}
+
+.hero{
+  min-height:100vh;
+  display:grid;
+  grid-template-columns:1.15fr .85fr;
+  gap:40px;
+  align-items:center;
+  padding-top:140px;
+}
+
+.badge{
+  display:inline-block;
+  padding:9px 14px;
+  border-radius:999px;
+  border:1px solid rgba(94,231,255,.35);
+  background:rgba(94,231,255,.08);
+  color:var(--cyan);
+  font-weight:700;
+  margin-bottom:22px;
+}
+
+h1{
+  font-size:clamp(2.6rem,6vw,5.8rem);
+  line-height:.95;
+  letter-spacing:-3px;
+  margin-bottom:24px;
+}
+
+.gradient{
+  background:linear-gradient(90deg,var(--cyan),var(--green));
+  -webkit-background-clip:text;
+  color:transparent;
+}
+
+.hero p{
+  font-size:1.18rem;
+  line-height:1.8;
+  color:var(--muted);
+  max-width:650px;
+}
+
+.actions{
+  margin-top:34px;
+  display:flex;
+  gap:16px;
+  flex-wrap:wrap;
+}
+
+.hero-card{
+  background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.03));
+  border:1px solid var(--border);
+  border-radius:34px;
+  padding:28px;
+  box-shadow:var(--shadow);
+  position:relative;
+  overflow:hidden;
+}
+
+.hero-card::before{
+  content:"";
+  position:absolute;
+  inset:-80px;
+  background:radial-gradient(circle,rgba(0,183,255,.18),transparent 55%);
+  z-index:-1;
+}
+
+.dashboard{
+  display:grid;
+  gap:18px;
+}
+
+.metric{
+  background:rgba(255,255,255,.06);
+  border:1px solid var(--border);
+  border-radius:22px;
+  padding:22px;
+}
+
+.metric strong{
+  font-size:2rem;
+  color:var(--green);
+}
+
+.metric p{
+  color:var(--muted);
+  margin-top:6px;
+}
+
+.title{
+  margin-bottom:48px;
+}
+
+.title h2{
+  font-size:clamp(2rem,4vw,3.8rem);
+  letter-spacing:-1.5px;
+  margin-bottom:14px;
+}
+
+.title p{
+  color:var(--muted);
+  font-size:1.1rem;
+  line-height:1.7;
+  max-width:780px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:22px;
+}
+
+.card{
+  background:linear-gradient(180deg,var(--card),var(--card2));
+  border:1px solid var(--border);
+  border-radius:28px;
+  padding:28px;
+  min-height:260px;
+  box-shadow:0 18px 45px rgba(0,0,0,.22);
+  transition:.25s;
+}
+
+.card:hover{
+  transform:translateY(-6px);
+  border-color:rgba(94,231,255,.45);
+}
+
+.icon{
+  width:54px;
+  height:54px;
+  display:grid;
+  place-items:center;
+  border-radius:18px;
+  background:rgba(0,183,255,.12);
+  color:var(--cyan);
+  font-size:1.6rem;
+  margin-bottom:22px;
+}
+
+.card h3{
+  font-size:1.35rem;
+  margin-bottom:12px;
+}
+
+.card p,.card li{
+  color:var(--muted);
+  line-height:1.7;
+}
+
+.card ul{
+  padding-left:18px;
+}
+
+.timeline{
+  display:grid;
+  gap:18px;
+}
+
+.step{
+  display:grid;
+  grid-template-columns:90px 1fr;
+  gap:22px;
+  align-items:start;
+  background:rgba(255,255,255,.05);
+  border:1px solid var(--border);
+  border-radius:24px;
+  padding:24px;
+}
+
+.step-number{
+  width:70px;
+  height:70px;
+  border-radius:24px;
+  background:linear-gradient(135deg,var(--blue),var(--green));
+  display:grid;
+  place-items:center;
+  font-size:1.5rem;
+  font-weight:900;
+}
+
+.step p{
+  color:var(--muted);
+  line-height:1.7;
+}
+
+.platform{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:28px;
+  align-items:center;
+}
+
+.screen{
+  background:#080c18;
+  border:1px solid var(--border);
+  border-radius:32px;
+  padding:20px;
+  box-shadow:var(--shadow);
+}
+
+.screen-top{
+  display:flex;
+  gap:8px;
+  margin-bottom:18px;
+}
+
+.dot{
+  width:12px;
+  height:12px;
+  border-radius:50%;
+  background:var(--blue);
+}
+
+.app-card{
+  background:linear-gradient(135deg,rgba(0,183,255,.14),rgba(86,243,154,.08));
+  border:1px solid var(--border);
+  border-radius:22px;
+  padding:20px;
+  margin-bottom:14px;
+}
+
+.progress{
+  height:10px;
+  background:rgba(255,255,255,.12);
+  border-radius:99px;
+  overflow:hidden;
+  margin-top:14px;
+}
+
+.progress span{
+  display:block;
+  height:100%;
+  width:72%;
+  background:linear-gradient(90deg,var(--blue),var(--green));
+}
+
+.callout{
+  background:
+    linear-gradient(135deg,rgba(0,183,255,.14),rgba(86,243,154,.12)),
+    var(--card);
+  border:1px solid rgba(94,231,255,.22);
+  border-radius:34px;
+  padding:42px;
+  box-shadow:var(--shadow);
+}
+
+.callout p{
+  color:var(--muted);
+  line-height:1.8;
+  font-size:1.08rem;
+}
+
+.contact{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:22px;
+}
+
+footer{
+  border-top:1px solid var(--border);
+  padding:36px 24px;
+  text-align:center;
+  color:var(--muted);
+}
+
+.whatsapp{
+  position:fixed;
+  right:24px;
+  bottom:24px;
+  width:62px;
+  height:62px;
+  border-radius:50%;
+  background:#25d366;
+  display:grid;
+  place-items:center;
+  color:white;
+  font-size:1.8rem;
+  box-shadow:0 20px 50px rgba(37,211,102,.35);
+  z-index:100;
+}
+
+.reveal{
+  opacity:0;
+  transform:translateY(28px);
+  transition:.7s ease;
+}
+
+.reveal.active{
+  opacity:1;
+  transform:translateY(0);
+}
+
+@media(max-width:900px){
+  .hero,.platform,.contact{
+    grid-template-columns:1fr;
+  }
+
+  .grid{
+    grid-template-columns:1fr;
+  }
+
+  .menu{
+    display:none;
+  }
+
+  h1{
+    letter-spacing:-1px;
+  }
+
+  section{
+    padding:80px 20px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="nav">
+    <div class="logo">
+      <span>🌱 ETSP</span>
+    </div>
+
+    <nav class="menu">
+      <a href="#etsp">ETSP</a>
+      <a href="#projeto">Projeto</a>
+      <a href="#plataforma">Plataforma</a>
+      <a href="#apa">APA</a>
+      <a href="#apoio">Apoio Público</a>
+      <a href="#contato">Contato</a>
+    </nav>
+
+    <a class="btn" href="https://wa.me/5511943220763" target="_blank">Falar no WhatsApp</a>
+  </div>
+</header>
+
+<main>
+
+<section class="hero">
+  <div class="reveal">
+    <span class="badge">Programa ETSP</span>
+    <h1>Formação de <span class="gradient">Jovens Agentes Ambientais</span></h1>
+    <p>
+      Uma jornada de juventude, cidadania e transformação do território.
+      O projeto conecta educação ambiental, práticas comunitárias, tecnologia,
+      participação social e liderança juvenil.
+    </p>
+
+    <div class="actions">
+      <a href="#projeto" class="btn">Conhecer o Projeto</a>
+      <a href="#plataforma" class="btn secondary">Ver Plataforma Digital</a>
+    </div>
+  </div>
+
+  <div class="hero-card reveal">
+    <div class="dashboard">
+      <div class="metric">
+        <strong>14–20</strong>
+        <p>Faixa etária dos participantes</p>
+      </div>
+      <div class="metric">
+        <strong>20•30•50</strong>
+        <p>Conhecimento, experiência e prática</p>
+      </div>
+      <div class="metric">
+        <strong>5 níveis</strong>
+        <p>Trilha de evolução do jovem agente ambiental</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="etsp">
+  <div class="title reveal">
+    <h2>Sobre a <span class="gradient">ETSP</span></h2>
+    <p>
+      A ETSP nasce com o propósito de transformar informações em soluções
+      aplicáveis para territórios, comunidades e instituições. Nossa atuação
+      une tecnologia, educação, sustentabilidade, transparência e participação social.
+    </p>
+  </div>
+
+  <div class="grid">
+    <div class="card reveal">
+      <div class="icon">◎</div>
+      <h3>Transparência</h3>
+      <p>Organizamos dados, ideias e ações para gerar clareza e participação.</p>
+    </div>
+
+    <div class="card reveal">
+      <div class="icon">◈</div>
+      <h3>Território</h3>
+      <p>Observamos a realidade local para criar soluções conectadas à comunidade.</p>
+    </div>
+
+    <div class="card reveal">
+      <div class="icon">✦</div>
+      <h3>Impacto</h3>
+      <p>Transformamos projetos em ações mensuráveis e socialmente relevantes.</p>
+    </div>
+  </div>
+</section>
+
+<section id="projeto">
+  <div class="title reveal">
+    <h2>O Projeto</h2>
+    <p>
+      O Programa Formação de Jovens Agentes Ambientais foi criado para aproximar
+      jovens da realidade ambiental do seu território, formando multiplicadores
+      capazes de observar, agir, comunicar e transformar.
+    </p>
+  </div>
+
+  <div class="grid">
+    <div class="card reveal">
+      <div class="icon">💧</div>
+      <h3>Água e Recursos Hídricos</h3>
+      <p>Preservação das nascentes, uso consciente da água e cuidado com mananciais.</p>
+    </div>
+
+    <div class="card reveal">
+      <div class="icon">♻</div>
+      <h3>Resíduos e Consumo</h3>
+      <p>Coleta seletiva, reutilização de materiais e mudança de hábitos.</p>
+    </div>
+
+    <div class="card reveal">
+      <div class="icon">🌱</div>
+      <h3>Biodiversidade</h3>
+      <p>Valorização da fauna, flora, polinizadores e áreas verdes do território.</p>
+    </div>
+
+    <div class="card reveal">
+      <div class="icon">🌳</div>
+      <h3>Plantio e Recuperação</h3>
+      <p>Plantio de mudas, hortas educativas e cuidado com espaços comunitários.</p>
+    </div>
+
+    <div class="card reveal">
+      <div class="icon">🧭</div>
+      <h3>Território e Cidadania</h3>
+      <p>Participação social, pertencimento, diagnóstico local e protagonismo juvenil.</p>
+    </div>
+
+    <div class="card reveal">
+      <div class="icon">📱</div>
+      <h3>Tecnologia Aplicada</h3>
+      <p>Registro fotográfico, mapeamento digital, indicadores e comunicação ambiental.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="title reveal">
+    <h2>Trilha do Participante</h2>
+    <p>
+      O jovem evolui dentro de uma jornada formativa com etapas simples,
+      reconhecíveis e motivadoras.
+    </p>
+  </div>
+
+  <div class="timeline">
+    <div class="step reveal">
+      <div class="step-number">1</div>
+      <div>
+        <h3>Explorador do Território</h3>
+        <p>Primeiro contato com o projeto, observação do bairro e introdução aos temas ambientais.</p>
+      </div>
+    </div>
+
+    <div class="step reveal">
+      <div class="step-number">2</div>
+      <div>
+        <h3>Guardião Ambiental</h3>
+        <p>Participação em oficinas práticas, mutirões, plantios e ações educativas.</p>
+      </div>
+    </div>
+
+    <div class="step reveal">
+      <div class="step-number">3</div>
+      <div>
+        <h3>Multiplicador Ambiental</h3>
+        <p>Produção de conteúdo, comunicação com a comunidade e apoio a novos participantes.</p>
+      </div>
+    </div>
+
+    <div class="step reveal">
+      <div class="step-number">4</div>
+      <div>
+        <h3>Agente de Transformação</h3>
+        <p>Criação de uma proposta prática para melhorar o território.</p>
+      </div>
+    </div>
+
+    <div class="step reveal">
+      <div class="step-number">5</div>
+      <div>
+        <h3>Embaixador ETSP</h3>
+        <p>Reconhecimento simbólico para jovens que se destacam em liderança e impacto social.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="plataforma">
+  <div class="platform">
+    <div class="reveal">
+      <div class="title">
+        <h2>Plataforma Digital ETSP</h2>
+        <p>
+          A plataforma digital organiza o acompanhamento do programa, permitindo
+          registrar atividades, visualizar evolução, pontuação, certificados,
+          missões e indicadores de impacto.
+        </p>
+      </div>
+
+      <div class="actions">
+        <a href="#contato" class="btn">Implementar em uma Instituição</a>
+      </div>
+    </div>
+
+    <div class="screen reveal">
+      <div class="screen-top">
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </div>
+
+      <div class="app-card">
+        <h3>Perfil do Jovem Agente</h3>
+        <p>Nível atual: Guardião Ambiental</p>
+        <div class="progress"><span></span></div>
+      </div>
+
+      <div class="app-card">
+        <h3>Missões da Semana</h3>
+        <p>Registrar ponto de descarte irregular no bairro.</p>
+      </div>
+
+      <div class="app-card">
+        <h3>Indicadores</h3>
+        <p>Árvores plantadas: 32 • Jovens ativos: 80 • Oficinas: 12</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="implementacao">
+  <div class="title reveal">
+    <h2>Onde Podemos Implementar</h2>
+    <p>
+      O programa pode ser adaptado para diferentes realidades institucionais,
+      mantendo sua essência prática e comunitária.
+    </p>
+  </div>
+
+  <div class="grid">
+    <div class="card reveal">
+      <h3>CCJAs</h3>
+      <p>Formação socioambiental integrada ao desenvolvimento de crianças, adolescentes e jovens.</p>
+    </div>
+
+    <div class="card reveal">
+      <h3>CEUs e Escolas</h3>
+      <p>Atividades educativas, oficinas, hortas, plantios e projetos de cidadania.</p>
+    </div>
+
+    <div class="card reveal">
+      <h3>OSCs e Associações</h3>
+      <p>Ações comunitárias, mutirões, campanhas e mobilização territorial.</p>
+    </div>
+
+    <div class="card reveal">
+      <h3>Empresas e ESG</h3>
+      <p>Parcerias para impacto social, juventude, educação ambiental e sustentabilidade.</p>
+    </div>
+
+    <div class="card reveal">
+      <h3>Subprefeituras</h3>
+      <p>Apoio a políticas públicas, educação ambiental e engajamento comunitário.</p>
+    </div>
+
+    <div class="card reveal">
+      <h3>Territórios de APA</h3>
+      <p>Atuação em áreas ambientalmente sensíveis, com foco em preservação e pertencimento.</p>
+    </div>
+  </div>
+</section>
+
+<section id="apa">
+  <div class="callout reveal">
+    <h2>Atuação em Áreas de Proteção Ambiental</h2>
+    <br>
+    <p>
+      A ETSP compreende que territórios como áreas de proteção ambiental exigem
+      cuidado, presença comunitária e educação permanente. A proteção ambiental
+      não pode depender apenas de fiscalização distante: ela precisa ser vivida
+      por quem habita, circula e constrói relações com o território.
+    </p>
+    <br>
+    <p>
+      A proposta é aproximar jovens da realidade das APAs por meio de trilhas
+      interpretativas, diagnóstico ambiental, registro de nascentes, observação
+      de biodiversidade, campanhas educativas e ações práticas de preservação.
+    </p>
+    <br>
+    <p>
+      O objetivo é formar uma geração que não apenas conheça a importância da
+      preservação, mas que se reconheça como parte ativa da proteção desses espaços.
+    </p>
+  </div>
+</section>
+
+<section id="apoio">
+  <div class="callout reveal">
+    <h2>Apoio Público e Cooperação Institucional</h2>
+    <br>
+    <p>
+      A juventude precisa de oportunidades reais para participar da construção
+      de territórios mais sustentáveis. Projetos socioambientais não devem ser
+      tratados como ações isoladas ou eventos pontuais, mas como estratégias
+      permanentes de formação, prevenção e desenvolvimento comunitário.
+    </p>
+    <br>
+    <p>
+      A ETSP propõe uma cooperação com instituições públicas, organizações sociais,
+      escolas, CCJAs, CEUs, subprefeituras e parceiros comprometidos com a formação
+      cidadã. O apoio público é essencial para ampliar o alcance das ações,
+      fortalecer a educação ambiental e transformar boas ideias em políticas
+      práticas, mensuráveis e acessíveis.
+    </p>
+    <br>
+    <p>
+      Apoiar este programa é investir em jovens, em território, em preservação
+      ambiental e em futuro coletivo.
+    </p>
+  </div>
+</section>
+
+<section>
+  <div class="title reveal">
+    <h2>Indicadores de Impacto</h2>
+    <p>
+      O programa permite acompanhar resultados de forma simples e objetiva.
+    </p>
+  </div>
+
+  <div class="grid">
+    <div class="card reveal">
+      <h3>Ambientais</h3>
+      <ul>
+        <li>Árvores plantadas</li>
+        <li>Resíduos recolhidos</li>
+        <li>Hortas implantadas</li>
+        <li>Áreas verdes cuidadas</li>
+      </ul>
+    </div>
+
+    <div class="card reveal">
+      <h3>Sociais</h3>
+      <ul>
+        <li>Jovens atendidos</li>
+        <li>Famílias impactadas</li>
+        <li>Ações comunitárias</li>
+        <li>Instituições parceiras</li>
+      </ul>
+    </div>
+
+    <div class="card reveal">
+      <h3>Educacionais</h3>
+      <ul>
+        <li>Oficinas realizadas</li>
+        <li>Certificados emitidos</li>
+        <li>Projetos criados</li>
+        <li>Jovens multiplicadores</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="contato">
+  <div class="title reveal">
+    <h2>Contato</h2>
+    <p>
+      Para parcerias, implementação do programa, apresentações institucionais
+      ou desenvolvimento da plataforma digital.
+    </p>
+  </div>
+
+  <div class="contact">
+    <div class="card reveal">
+      <h3>WhatsApp</h3>
+      <p>(11) 94322-0763</p>
+      <br>
+      <a class="btn" href="https://wa.me/5511943220763" target="_blank">Enviar Mensagem</a>
+    </div>
+
+    <div class="card reveal">
+      <h3>E-mail</h3>
+      <p>icontato.etsp@gmail.com</p>
+      <br>
+      <a class="btn secondary" href="mailto:icontato.etsp@gmail.com">Enviar E-mail</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<a class="whatsapp" href="https://wa.me/5511943220763" target="_blank">☘</a>
+
+<footer>
+  <p>ETSP – Inteligência que Transforma o Território</p>
+  <p>Programa Formação de Jovens Agentes Ambientais</p>
+</footer>
+
+<script>
+const reveals = document.querySelectorAll(".reveal");
+
+function revealOnScroll(){
+  const trigger = window.innerHeight * 0.88;
+
+  reveals.forEach(el=>{
+    const top = el.getBoundingClientRect().top;
+    if(top < trigger){
+      el.classList.add("active");
+    }
+  });
+}
+
+window.addEventListener("scroll", revealOnScroll);
+window.addEventListener("load", revealOnScroll);
+</script>
+
+</body>
+</html>
